@@ -55,7 +55,7 @@ elif grep -q "Kali Linux" /etc/os-release; then
     echo "[+] OS Detected: Kali Linux."
     echo "[+] Starting installation for Kali Linux."
     kali_linux_install
-elif [ "$(grep -Eqi 'debian|buntu|mint' /etc/*release)" ]; then
+elif grep -Eqi 'debian|buntu|mint' /etc/*release"; then
     echo "[+] OS Detected: Debian based."
     echo "[+] Starting installation for Debian based distribution."
     debian_based_install
