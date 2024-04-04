@@ -4,7 +4,7 @@ finish_installation() {
    idVendor=$(lsusb | grep "T2U PLUS" | cut -d " " -f 6 | cut -d ":" -f 1)
    idProduct=$(lsusb | grep "T2U PLUS" | cut -d " " -f 6 | cut -d ":" -f 2)
 
-   usb_id=$(sudo dmesg | grep "idVendor=$idVendor, idProduct=$idProduct" | cut -d " " -f 3 | tr -d ":")
+   usb_id=$(sudo dmesg | grep "idVendor=$idVendor, idProduct=$idProduct" | cut -d ":" -f 1 | cut -d "]" -f 2 | cut -d " " -f 3)
 
    if [ -n "usb_id" ]; then
       read -p "[+] TP-Link Archer T2U PLUS [RTL8821AU] was detected, do you want to replug it automatically? [Y/N]: " -r answer
@@ -35,7 +35,7 @@ debian_based_install() {
 }
 
 kali_linux_install() {
-   sudo apt-get install git aicrack-ng realtek-rtl88xxau-dkms -y
+   sudo apt-get install git aircrack-ng realtek-rtl88xxau-dkms -y
    finish_installation
 }
 
@@ -51,7 +51,7 @@ if grep -q 'BCM2' /proc/cpuinfo; then
     echo "[+] OS Detected: Raspberry Pi."
     echo "[+] Starting installation for Raspberry Pi."
     raspberrypi_install
-elif grep -q "Kali Linux" /etc/os-release; then
+elif grep -q "Kali" /etc/os-release; then
     echo "[+] OS Detected: Kali Linux."
     echo "[+] Starting installation for Kali Linux."
     kali_linux_install
